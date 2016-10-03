@@ -1,9 +1,22 @@
 Package: zipcodes
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Provided Information on Cities, Counties, County FIPS Codes, State FIPS
+    Codes, and Zipcodes for the United States
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Authors@R: person("Jacob", "Kaplan", email = "jacobkap@sas.upenn.edu", role = c       ("aut", "cre"))
+Description: Provides a dataset containing city, county, county FIPS codes,
+    and state FIPS codes for 40569 zipcodes in the United States. It also includes
+    functions to easily grab relevant data or convert zipcodes to county FIPS codes.
+    This allows you to merge various datasets that do not include FIPS codes (e.g.
+    The Uniform Crime Report datasets) to those that do as well as make maps using
+    the choropleth package.
+Depends:
+    R (>= 2.10)
+Imports:
+    rvest,
+    xml2
+License: GPL
 LazyData: TRUE
+URL: https://github.com/jacobkap/zipcodes
+BugReports: https://github.com/jacobkap/zipcodes/issues
+RoxygenNote: 5.0.1.9000
