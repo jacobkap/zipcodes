@@ -203,30 +203,26 @@ zipcode <- function(zipcode) {
 #' @export
 #'
 #' @examples
-#' zips2fips(c("94526", "19104"))
+#' zips2fips(c("94526", "19104", "99999", 313, NA, "test"))
 zips2fips <- function(zipcode) {
 
-  zipcode <- paste("^", zipcode, "$", sep = "")
-  dataset_temp <- zipcodes$county_FIPS[grep(zipcode[1],
-                           ignore.case = TRUE, zipcodes$zipcode)]
-  if (length(dataset_temp) < 1) {
-    dataset_temp <- NA
-  }
-  dataset <- dataset_temp
+  zipcode[is.na(zipcode)] <- ""
+  zipcode2 <- zipcode
 
-  if (length(zipcode) > 1) {
-    for (i in 2:length(zipcode)) {
-      dataset_temp <- zipcodes$county_FIPS[grep(zipcode[i],
-                      ignore.case = TRUE, zipcodes$zipcode)]
-      if (length(dataset_temp) < 1) {
-        dataset_temp <- NA
-      }
-      dataset[i] <- dataset_temp
+  for (n in 1:nrow(zipcodes)) {
+    zipcode[which(zipcode ==
+                                    zipcodes$zipcode[n])] <-
+      zipcodes$county_FIPS[n]
+  }
+
+  for (n in 1:length(zipcode)) {
+    if (zipcode[n] == zipcode2[n]) {
+    zipcode[n] <- NA
     }
   }
 
-  dataset <- gsub("^\\^.*", NA, dataset)
-  return(dataset)
+
+  return(zipcode)
 }
 
 
