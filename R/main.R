@@ -207,10 +207,25 @@ zipcode <- function(zipcode) {
 zips2fips <- function(zipcode) {
 
   zipcode <- paste("^", zipcode, "$", sep = "")
-  dataset <- zipcodes$county_FIPS[grep(paste(zipcode, collapse = "|"),
+  dataset_temp <- zipcodes$county_FIPS[grep(zipcode[1],
                            ignore.case = TRUE, zipcodes$zipcode)]
+  if (length(dataset_temp) < 1) {
+    dataset_temp <- NA
+  }
+  dataset <- dataset_temp
 
+  if (length(zipcode) > 1) {
+    for (i in 2:length(zipcode)) {
+      dataset_temp <- zipcodes$county_FIPS[grep(zipcode[i],
+                      ignore.case = TRUE, zipcodes$zipcode)]
+      if (length(dataset_temp) < 1) {
+        dataset_temp <- NA
+      }
+      dataset[i] <- dataset_temp
+    }
+  }
 
+  dataset <- gsub("^\\^.*", NA, dataset)
   return(dataset)
 }
 
